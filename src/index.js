@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 // Correct: Import named export hotjar
-import { hotjar } from '@hotjar/browser';
+import * as hotjar from '@hotjar/browser';
 
 // Initialize Hotjar only in production (or wherever you want)
 if (process.env.NODE_ENV === 'production') {
