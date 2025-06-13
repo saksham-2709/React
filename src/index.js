@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from '.';
-
+import App from './App';
 // ✅ Import Hotjar
 import { init } from '@hotjar/browser';
 
