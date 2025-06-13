@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Management</title>
+</head>
+<body>
+  <h1>User List</h1>
+  <ul id="user-list"></ul>
+
+  <h2>Add New User</h2>
+  <input type="text" id="name" placeholder="Enter name">
+  <button onclick="addUser()">Add</button>
+
+  <h2>Update User</h2>
+  <input type="number" id="update-id" placeholder="User ID">
+  <input type="text" id="update-name" placeholder="New Name">
+  <button onclick="updateUser()">Update</button>
+
+  <h2>Delete User</h2>
+  <input type="number" id="delete-id" placeholder="User ID">
+  <button onclick="deleteUser()">Delete</button>
+
+  <script>
+    function loadUsers() {
+      fetch('http://localhost:5000/api/users')
+        .then(res => res.json())
+        .then(data => {
+          const ul = document.getElementById('user-list');
+          ul.innerHTML = '';
+          data.forEach(user => {
+            const li = document.createElement('li');
+            li.textContent = `${user.id}: ${user.name}`;
+            ul.appendChild(li);
+          });
+        });
+    }
+
+    function addUser() {
+      const name = document.getElementById('name').value;
+      fetch('http://localhost:5000/api/users', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        document.getElementById('name').value = '';
+        loadUsers();
+      });
+    }
+
+    function updateUser() {
+      const id = document.getElementById('update-id').value;
+      const name = document.getElementById('update-name').value;
+      fetch(`http://localhost:5000/api/users/${id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message || data.error);
+        loadUsers();
+      });
+    }
+
+    function deleteUser() {
+      const id = document.getElementById('delete-id').value;
+      fetch(`http://localhost:5000/api/users/${id}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        loadUsers();
+      });
+    }
+
+    loadUsers();
+  </script>
+</body>
+</html>
