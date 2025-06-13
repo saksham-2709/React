@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 // ✅ Import Hotjar
-import { init } from '@hotjar/browser';
+import hotjar from '@hotjar/browser';
+
+hotjar.initialize(6434277, 6); // 🔁 Use your real site ID from Hotjar
 
 // ✅ Initialize Hotjar in production only
 if (process.env.NODE_ENV === 'production') {
