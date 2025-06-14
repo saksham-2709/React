@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-import { init } from '@hotjar/browser';
+// ✅ Correct import for Hotjar
+import * as hotjar from '@hotjar/browser';
 
+// ✅ Call only in production
 if (process.env.NODE_ENV === 'production') {
-  const siteId = 6434277;
-  const hotjarVersion = 6;
-  init(siteId, hotjarVersion);
+  hotjar.init(6434277, 6);  // Replace with your real Site ID and Version
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
